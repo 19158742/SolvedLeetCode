@@ -8,19 +8,18 @@ public class Solution {
           if (!lst.Any(s => s.str.Contains(arr[i]))){
             objst.strcount =0;
             objst.str = arr[i].ToString();
-              lst.Add(objst);
+            lst.Add(objst);
           }
           else
           {
+              
               int val = lst.Where(s=> s.str.Equals(arr[i])).Select(s=> s.strcount).FirstOrDefault();
-            objst.strcount = val + 1;
-            objst.str = arr[i].ToString();
-              lst.Add(objst);
+              lst.Find(x => x.str.Equals(arr[i].ToString())).strcount = val + 1;
           }
-          //Console.Write(arr[i] + "\n");
+         
       }
         bool isUnique = lst.Select(x=>x.strcount).Distinct().Count() == lst.Count();
-        if(isUnique){
+       if(isUnique){
             return 0;
         }
         int cnt =1;
