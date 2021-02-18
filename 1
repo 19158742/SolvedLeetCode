@@ -1,0 +1,43 @@
+public class Solution {
+    public int MinDeletions(string s) {
+      char[] arr = s.ToCharArray();
+        List<StringTbl> lst = new List<StringTbl>();
+      for(int i =0;i<arr.Count();i++){
+          
+          StringTbl objst = new StringTbl();
+          if (!lst.Any(s => s.str.Contains(arr[i]))){
+            objst.strcount =0;
+            objst.str = arr[i].ToString();
+              lst.Add(objst);
+          }
+          else
+          {
+              int val = lst.Where(s=> s.str.Equals(arr[i])).Select(s=> s.strcount).FirstOrDefault();
+            objst.strcount = val + 1;
+            objst.str = arr[i].ToString();
+              lst.Add(objst);
+          }
+          //Console.Write(arr[i] + "\n");
+      }
+        bool isUnique = lst.Select(x=>x.strcount).Distinct().Count() == lst.Count();
+        if(isUnique){
+            return 0;
+        }
+        int cnt =1;
+        foreach(var item in lst){
+            if(lst.Any(s => s.strcount == item.strcount))
+            {
+                lst.Find(x => x.strcount == item.strcount).strcount = item.strcount - 1;
+                cnt++;
+                break ;
+            }
+            
+        }
+        
+        return cnt;
+    }
+}
+public class StringTbl{
+    public int strcount;
+    public string str;
+}
